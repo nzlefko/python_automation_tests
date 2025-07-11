@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# PyCharm project files
+.idea/
+
+# VSCode project files (in case you or others switch IDE)
+.vscode/
+
+# Environment variables or secrets
+.env
+
+# Mac system files
+.DS_Store
+
+# Test reports, logs
+*.log
+*.pytest_cache/
+htmlcov/
+coverage.xml
+
+# Jupyter Notebook checkpoints (if applicable)
+.ipynb_checkpoints/
+
+# Other unwanted files
+*.swp
+*.bak

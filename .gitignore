@@ -9,6 +9,7 @@ env/
 ENV/
 .venv/
 .venv1/
+drivers/
 
 # PyCharm project files
 .idea/

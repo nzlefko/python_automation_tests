@@ -12,3 +12,13 @@ def test_post_to_search_product():
     assert response.status_code == 200
     assert "products" in response.json()
     assert len(response.json()["products"]) == 3
+
+def test_post_to_search_product_without_search_product_negative():
+    endpoint = f"{BASE_URL}/searchProduct"
+    # data = {
+    #     "search_product": "",
+    # }
+
+    response = requests.post(endpoint)
+    assert response.status_code == 400
+    assert response.text == "Bad request, search_product parameter is missing in POST request."

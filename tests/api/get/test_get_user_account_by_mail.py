@@ -14,13 +14,14 @@ def test_get_account_detail_by_mail():
     assert response.status_code == 200
     assert "email" in response.text
 
-def test_post_to_search_product():
-    endpoint = f"{BASE_URL}/searchProduct"
-    data = {
-        "search_product": "jeans",
+def test_get_account_detail_by_mail_negative():
+    endpoint = f"{BASE_URL}/getUserDetailByEmail"
+    params = {
+        "email": INVALID_EMAIL,
+        "password": INVALID_PASSWORD
     }
 
-    response = requests.post(endpoint, data=data)
-    assert response.status_code == 200
-    assert "products" in response.json()
-    assert len(response.json()["products"]) == 3
+    response = requests.get(endpoint, params=params)
+
+    assert response.status_code == 404
+    assert "email" in response.text

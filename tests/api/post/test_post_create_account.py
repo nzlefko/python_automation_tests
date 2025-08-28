@@ -28,3 +28,15 @@ def test_create_account():
     response = requests.post(endpoint, data=payload)
     assert response.json().get("responseCode") == 201
     assert "User created!" in response.json().get("message")
+
+def test_delete_account():
+    endpoint = f"{BASE_URL}/deleteAccount"
+
+    payload = {
+        "email": "some_new_email@example.com",
+        "password": VALID_PASSWORD
+    }
+
+    response = requests.delete(endpoint, data=payload)
+    assert response.json().get("responseCode") == 200
+    assert "Account deleted!" in response.json().get("message")

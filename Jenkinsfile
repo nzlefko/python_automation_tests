@@ -26,7 +26,7 @@ pipeline {
     post {
         always {
             // This step publishes the Allure report in Jenkins
-            allure report: 'allure-results', allureCommandline: 'Allure', retention: [ history: 20]
+            allure report: 'allure-results', commandline: 'Allure', results: [retention: [ history: 20]]
         }
     }
 }

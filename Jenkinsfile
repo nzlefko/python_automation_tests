@@ -31,7 +31,8 @@ pipeline {
         always {
             // This step publishes the Allure report in Jenkins
             allure report: 'allure-results', commandline: 'Allure', results: [
-                [type: 'directory', source: 'allure-results', results: [retention: [ history: 20]]
+                [type: 'directory', source: 'allure-results', results: [retention: [ history: 20]]]
+            ]
         }
     }
 }

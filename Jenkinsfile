@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11' // You can choose any version you need, e.g., python:3.9-slim
+            args '-u root'      // Optional: Forces the container to run steps as the root user
+        }
+    }
 
     stages {
         stage('Clone Repository') {
@@ -12,10 +17,10 @@ pipeline {
             steps {
                 // Install Python and pip first if they are not present
                 // Example for a Debian/Ubuntu-based Jenkins image
-                sh 'sudo apt-get update'
-                sh 'sudo apt-get install -y python3 python3-pip'
-                sh 'python3 -m venv venv'
-                sh 'source venv/bin/activate'
+                // sh 'sudo apt-get update'
+                // sh 'sudo apt-get install -y python3 python3-pip'
+                // sh 'python3 -m venv venv'
+                // sh 'source venv/bin/activate'
                 sh 'pip install -r requirements.txt'
                 sh 'pip install allure-pytest'
             }

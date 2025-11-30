@@ -1,45 +1,41 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11' // You can choose any version you need, e.g., python:3.9-slim
-            args '-u root'      // Optional: Forces the container to run steps as the root user
-        }
-    }
+    // 1. Set the top-level agent to 'none'
+    agent none
 
     stages {
         stage('Clone Repository') {
-            steps {
-                // This step is often handled automatically by Jenkins if you configure the job with SCM
-                git branch: 'main', url: 'https://github.com/nzlefko/python_automation_tests.git'
-            }
+             // Optional: You can keep a simple git step here if you want to ensure the clone runs immediately
+             steps {
+                 git branch: 'main', url: 'YOUR_GITHUB_REPO_URL'
+             }
         }
-        stage('Install Dependencies') {
+
+        stage('Install and Test') {
+            // 2. Define the Docker agent within the stage
+            agent {
+                docker {
+                    image 'python:3.11'
+                    args '-u root'
+                }
+            }
             steps {
-                // Install Python and pip first if they are not present
-                // Example for a Debian/Ubuntu-based Jenkins image
-                // sh 'sudo apt-get update'
-                // sh 'sudo apt-get install -y python3 python3-pip'
-                // sh 'python3 -m venv venv'
-                // sh 'source venv/bin/activate'
+                // 3. The streamlined installation and test steps (no apt-get or venv source needed)
                 sh 'pip install -r requirements.txt'
                 sh 'pip install allure-pytest'
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                sh 'source venv/bin/activate'
                 sh 'pytest --alluredir=allure-results'
-                reuseNode true
             }
         }
     }
+
     post {
         always {
-            // This step publishes the Allure report in Jenkins
-            container('python') {
-            allure report: 'allure-results', commandline: 'Allure', results: [
-                [type: 'directory', source: 'allure-results', results: [retention: [ history: 20]]]
-            ]
+            // 4. Wrap the allure step in a node block to restore file access
+            node {
+                // Use the simplest, most compatible allure syntax
+                allure 'allure-results'
+
+                // OR: If the simplest form fails, use this (but try the simpler first):
+                // allure results: 'allure-results', commandline: 'Allure', history: 20
             }
         }
     }

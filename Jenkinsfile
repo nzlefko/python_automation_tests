@@ -1,5 +1,9 @@
 pipeline {
-    agent none
+    agent {
+        node {
+            label 'master' // Use 'master' to ensure the built-in Jenkins agent is used
+        }
+    }
 
     stages {
         stage('Clone Repository') {

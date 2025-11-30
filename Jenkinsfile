@@ -29,15 +29,18 @@ pipeline {
             steps {
                 sh 'source venv/bin/activate'
                 sh 'pytest --alluredir=allure-results'
+                reuseNode true
             }
         }
     }
     post {
         always {
             // This step publishes the Allure report in Jenkins
+            container('python') {
             allure report: 'allure-results', commandline: 'Allure', results: [
                 [type: 'directory', source: 'allure-results', results: [retention: [ history: 20]]]
             ]
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ pipeline {
     post {
         always {
             // Runs on the Jenkins agent to ensure file path access
-            node(label: 'any') {
+            node(label: 'built-in') {
                 // Publish Allure Report using the required list syntax for results
                 allure results: [[path: 'allure-results']], commandline: 'Allure'
             }

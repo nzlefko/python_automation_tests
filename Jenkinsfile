@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label 'master' // Use 'master' to ensure the built-in Jenkins agent is used
+            label 'built-in' // Use 'master' to ensure the built-in Jenkins agent is used
         }
     }
 

@@ -33,7 +33,7 @@ pipeline {
             // Runs on the Jenkins agent to ensure file path access
             node(label: 'any') {
                 // Publish Allure Report using the required list syntax for results
-                allure results: [[path: 'allure-results']], commandline: 'Allure', history: 20
+                allure results: [[path: 'allure-results']], commandline: 'Allure'
             }
         }
     }
